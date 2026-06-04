@@ -57,12 +57,11 @@
     renderedHTML = `<div class="error-container"><h3>Markdownのパースに失敗しました</h3><p>${e.message}</p></div>`;
   }
 
-  // 6. 目次（TOC）データの抽出
+  // 6. 目次（TOC）データの抽出とツリー構築
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = renderedHTML;
   
   const headings = tempDiv.querySelectorAll('h1, h2, h3');
-  const tocItems = [];
   
   headings.forEach((heading, index) => {
     let id = heading.getAttribute('id');
@@ -78,14 +77,64 @@
       }
       heading.setAttribute('id', id);
     }
-    
-    tocItems.push({
-      id: id,
-      text: heading.textContent,
-      level: heading.tagName.toLowerCase()
-    });
   });
 
+  // ツリー構造を構築する関数
+  function buildTocTree(headingNodes) {
+    const root = { children: [] };
+    const stack = [{ level: 0, node: root }];
+
+    headingNodes.forEach((heading) => {
+      const level = parseInt(heading.tagName.substring(1)); // 1 for h1, 2 for h2, 3 for h3
+      const id = heading.getAttribute('id');
+      const text = heading.textContent.trim();
+      
+      const node = {
+        id: id,
+        text: text,
+        level: level,
+        children: []
+      };
+
+      while (stack.length > 1 && stack[stack.length - 1].level >= level) {
+        stack.pop();
+      }
+
+      stack[stack.length - 1].node.children.push(node);
+      stack.push({ level: level, node: node });
+    });
+
+    return root.children;
+  }
+
+  // ツリー構造をHTMLにレンダリングする再帰関数
+  function renderTocHtml(treeItems) {
+    if (!treeItems || treeItems.length === 0) return '';
+    return `
+      <ul class="toc-list">
+        ${treeItems.map(node => {
+          const hasChildren = node.children && node.children.length > 0;
+          const toggleButton = hasChildren 
+            ? `<button class="toc-toggle-btn" aria-label="Toggle section"><span class="material-symbols-outlined">expand_more</span></button>` 
+            : `<span class="toc-item-spacer"></span>`;
+          
+          return `
+            <li class="toc-item-wrapper toc-h${node.level}" data-has-children="${hasChildren}">
+              <div class="toc-item-row">
+                ${toggleButton}
+                <a href="#${node.id}" class="toc-item" data-id="${node.id}">
+                  <span class="toc-item-text">${node.text}</span>
+                </a>
+              </div>
+              ${hasChildren ? renderTocHtml(node.children) : ''}
+            </li>
+          `;
+        }).join('')}
+      </ul>
+    `;
+  }
+
+  const tocTree = buildTocTree(headings);
   renderedHTML = tempDiv.innerHTML;
 
   // 7. UI構造の構築
@@ -135,20 +184,11 @@
           <h3>目次</h3>
         </div>
         <nav class="toc-navigation">
-          ${tocItems.length === 0 
+          ${tocTree.length === 0 
             ? '<div class="toc-empty">見出しがありません</div>' 
             : `
               <div class="toc-indicator"></div>
-              <ul class="toc-list">
-                ${tocItems.map(item => `
-                  <li class="toc-item-wrapper toc-${item.level}">
-                    <a href="#${item.id}" class="toc-item" data-id="${item.id}">
-                      <span class="toc-item-dot"></span>
-                      <span class="toc-item-text">${item.text}</span>
-                    </a>
-                  </li>
-                `).join('')}
-              </ul>
+              ${renderTocHtml(tocTree)}
             `
           }
         </nav>
@@ -326,6 +366,16 @@
         matchingLink.classList.add('active');
         activeLink = matchingLink;
 
+        // 自動展開処理：親の collapsed を解除
+        let parentWrapper = matchingLink.closest('.toc-item-wrapper');
+        while (parentWrapper) {
+          const grandparentWrapper = parentWrapper.parentElement.closest('.toc-item-wrapper');
+          if (grandparentWrapper && grandparentWrapper.classList.contains('collapsed')) {
+            grandparentWrapper.classList.remove('collapsed');
+          }
+          parentWrapper = grandparentWrapper;
+        }
+
         if (tocIndicator) {
           const navEl = document.querySelector('.toc-navigation');
           const navRect = navEl.getBoundingClientRect();
@@ -345,6 +395,20 @@
       if (tocIndicator) tocIndicator.style.opacity = '0';
     }
   }
+
+  // 目次の折りたたみ/展開のインタラクション
+  const toggleButtons = document.querySelectorAll('.toc-toggle-btn');
+  toggleButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation(); // リンククリックなどの親イベントへの伝播を防ぐ
+      const wrapper = btn.closest('.toc-item-wrapper');
+      if (wrapper) {
+        wrapper.classList.toggle('collapsed');
+        // 折りたたまれて目次の高さが変わるため、アクティブインジケーター位置を再計算
+        setTimeout(updateTocSpy, 50);
+      }
+    });
+  });
 
   if (tocLinks.length > 0) {
     window.addEventListener('scroll', updateTocSpy);

@@ -280,22 +280,77 @@ html, body {
   margin: 4px 16px;
 }
 
-/* 階層インデント */
-.toc-toch1 {
-  margin-left: 8px;
+/* 階層リストのネスト */
+.toc-navigation .toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-.toc-toch2 {
-  margin-left: 20px;
+
+.toc-navigation .toc-list .toc-list {
+  padding-left: 8px;
+  border-left: 1px dashed var(--md-sys-color-outline-variant);
+  margin-left: 12px; /* トグルボタンの位置に合わせる */
 }
-.toc-toch3 {
-  margin-left: 32px;
+
+.toc-item-wrapper {
+  margin: 2px 8px 2px 16px;
+}
+
+.toc-item-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 折りたたみ用トグルボタン */
+.toc-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--md-sys-color-on-surface-variant);
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.toc-toggle-btn:hover {
+  background-color: rgba(230, 225, 229, 0.08);
+  color: var(--md-sys-color-on-surface);
+}
+
+.toc-toggle-btn .material-symbols-outlined {
+  font-size: 16px;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* 折りたたみ状態 */
+.toc-item-wrapper.collapsed > .toc-list {
+  display: none;
+}
+
+.toc-item-wrapper.collapsed > .toc-item-row .toc-toggle-btn .material-symbols-outlined {
+  transform: rotate(-90deg);
+}
+
+/* スペーサー（子を持たない項目用） */
+.toc-item-spacer {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .toc-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
+  padding: 6px 12px;
   color: var(--md-sys-color-on-surface-variant);
   text-decoration: none;
   font-size: 14px;
@@ -305,6 +360,7 @@ html, body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex: 1;
 }
 
 .toc-item:hover {
@@ -315,21 +371,7 @@ html, body {
 .toc-item.active {
   color: var(--md-sys-color-primary);
   font-weight: 600;
-}
-
-.toc-item-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: var(--md-sys-color-outline);
-  opacity: 0.5;
-  transition: background-color 0.2s, transform 0.2s;
-}
-
-.toc-item.active .toc-item-dot {
-  background-color: var(--md-sys-color-primary);
-  opacity: 1;
-  transform: scale(1.5);
+  background-color: rgba(208, 188, 255, 0.05);
 }
 
 .toc-empty {
