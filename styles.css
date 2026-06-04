@@ -343,7 +343,7 @@ html, body {
 .content-panel {
   flex: 1;
   margin-left: var(--sidebar-width);
-  padding: 40px 56px;
+  padding: 40px 38px;
   background-color: var(--md-sys-color-background);
   min-width: 0;
   display: flex;
@@ -370,9 +370,9 @@ html, body {
   color: var(--md-sys-color-on-background);
   font-size: 16px;
   line-height: 1.7;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 16px;
   box-sizing: border-box;
 }
 
@@ -577,7 +577,7 @@ html, body {
   background-color: var(--md-sys-color-surface);
   overflow: hidden;
   margin: 20px auto;
-  max-width: 1000px;
+  max-width: 1400px;
   width: 100%;
 }
 
