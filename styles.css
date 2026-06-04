@@ -1,0 +1,674 @@
+/* styles.css */
+
+/* テーマカラー・CSS変数 */
+:root {
+  --md-sys-color-background: #1c1b1f;
+  --md-sys-color-on-background: #e6e1e5;
+  --md-sys-color-surface: #25232a;
+  --md-sys-color-on-surface: #e6e1e5;
+  --md-sys-color-surface-variant: #49454f;
+  --md-sys-color-on-surface-variant: #cac4d0;
+  --md-sys-color-primary: #d0bcff;
+  --md-sys-color-on-primary: #381e72;
+  --md-sys-color-primary-container: #4f378b;
+  --md-sys-color-on-primary-container: #eaddff;
+  --md-sys-color-secondary-container: #4a4458;
+  --md-sys-color-on-secondary-container: #e8def8;
+  --md-sys-color-outline: #938f99;
+  --md-sys-color-outline-variant: #49454f;
+  --md-sys-color-error: #f2b8b5;
+  --md-sys-color-surface-tint: #d0bcff;
+  --md-sys-color-inverse-surface: #e6e1e5;
+  --md-sys-color-inverse-on-surface: #313033;
+  --md-sys-color-scrim: #000000;
+  
+  /* カスタム変数 */
+  --header-bg: rgba(28, 27, 31, 0.85);
+  --sidebar-width: 280px;
+  --header-height: 64px;
+}
+
+/* 基本的なリセットとフォント */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+/* Material Symbols のための設定 */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* コンテナ */
+#md3-app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* --- Top App Bar (Header) --- */
+.top-app-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+  padding: 0 24px;
+  background-color: var(--header-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.top-app-bar-start {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  margin-right: 24px;
+}
+
+.top-app-bar-end {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* パンくずリスト */
+.breadcrumbs-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.breadcrumb-item-link {
+  color: var(--md-sys-color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.breadcrumb-item-link:hover {
+  color: var(--md-sys-color-on-primary-container);
+  text-decoration: underline;
+}
+
+.breadcrumb-separator {
+  color: var(--md-sys-color-outline);
+  opacity: 0.6;
+}
+
+.breadcrumb-item.active {
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+}
+
+/* セグメンテッドボタン (Mode Switcher) */
+.segmented-button-container {
+  display: flex;
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 100px;
+  overflow: hidden;
+  height: 40px;
+}
+
+.segmented-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: var(--md-sys-color-on-surface-variant);
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  height: 100%;
+}
+
+.segmented-button:first-child {
+  border-right: 1px solid var(--md-sys-color-outline);
+  padding-left: 20px;
+}
+
+.segmented-button:last-child {
+  padding-right: 20px;
+}
+
+.segmented-button:hover {
+  background-color: rgba(230, 225, 229, 0.08);
+}
+
+.segmented-button.active {
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+.segmented-button .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* アイコンボタン */
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--md-sys-color-on-surface);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.icon-button:hover {
+  background-color: rgba(230, 225, 229, 0.08);
+}
+
+.icon-button:active {
+  transform: scale(0.95);
+}
+
+/* --- ワークスペース (TOC + Main) --- */
+.workspace-container {
+  display: flex;
+  margin-top: var(--header-height);
+  min-height: calc(100vh - var(--header-height));
+  position: relative;
+}
+
+/* --- 左側サイドバー (目次) --- */
+.toc-sidebar {
+  width: var(--sidebar-width);
+  border-right: 1px solid var(--md-sys-color-outline-variant);
+  background-color: var(--md-sys-color-surface);
+  position: fixed;
+  top: var(--header-height);
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+}
+
+.toc-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 24px 16px 24px;
+  border-bottom: 1px solid rgba(147, 143, 153, 0.1);
+}
+
+.toc-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.toc-header .material-symbols-outlined {
+  color: var(--md-sys-color-primary);
+  font-size: 20px;
+}
+
+.toc-navigation {
+  position: relative;
+  flex: 1;
+  padding: 16px 0;
+}
+
+/* 目次のインジケーターバー */
+.toc-indicator {
+  position: absolute;
+  left: 16px;
+  width: 4px;
+  border-radius: 4px;
+  background-color: var(--md-sys-color-primary);
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), height 0.25s cubic-bezier(0.2, 0, 0, 1), opacity 0.2s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-item-wrapper {
+  margin: 4px 16px;
+}
+
+/* 階層インデント */
+.toc-toch1 {
+  margin-left: 8px;
+}
+.toc-toch2 {
+  margin-left: 20px;
+}
+.toc-toch3 {
+  margin-left: 32px;
+}
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  color: var(--md-sys-color-on-surface-variant);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.toc-item:hover {
+  background-color: rgba(208, 188, 255, 0.08);
+  color: var(--md-sys-color-on-surface);
+}
+
+.toc-item.active {
+  color: var(--md-sys-color-primary);
+  font-weight: 600;
+}
+
+.toc-item-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: var(--md-sys-color-outline);
+  opacity: 0.5;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.toc-item.active .toc-item-dot {
+  background-color: var(--md-sys-color-primary);
+  opacity: 1;
+  transform: scale(1.5);
+}
+
+.toc-empty {
+  padding: 24px;
+  font-size: 14px;
+  color: var(--md-sys-color-on-surface-variant);
+  text-align: center;
+  font-style: italic;
+}
+
+/* --- メインコンテンツパネル --- */
+.content-panel {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  padding: 40px 56px;
+  background-color: var(--md-sys-color-background);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* サイドバーが非表示（Plainモード時）の時 */
+.content-panel:only-child,
+.toc-sidebar[style*="display: none"] + .content-panel {
+  margin-left: 0;
+  padding: 40px 10%;
+}
+
+.view-panel {
+  display: none;
+}
+
+.view-panel.active {
+  display: block;
+}
+
+/* --- Markdown プレビューの見た目 (markdown-body) --- */
+.markdown-body {
+  color: var(--md-sys-color-on-background);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+  margin-top: 32px;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2.2em;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.markdown-body h2 {
+  font-size: 1.6em;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(147, 143, 153, 0.2);
+}
+
+.markdown-body h3 {
+  font-size: 1.3em;
+}
+
+.markdown-body p, 
+.markdown-body ul, 
+.markdown-body ol, 
+.markdown-body blockquote {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body a {
+  color: var(--md-sys-color-primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom-color 0.2s;
+}
+
+.markdown-body a:hover {
+  border-bottom-color: var(--md-sys-color-primary);
+}
+
+.markdown-body code {
+  font-family: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
+  font-size: 85%;
+  background-color: var(--md-sys-color-surface);
+  padding: 3px 6px;
+  border-radius: 4px;
+  color: var(--md-sys-color-primary);
+}
+
+.markdown-body pre {
+  background-color: var(--md-sys-color-surface);
+  padding: 16px;
+  border-radius: 12px;
+  overflow: auto;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.markdown-body pre code {
+  background-color: transparent;
+  padding: 0;
+  font-size: 90%;
+  color: var(--md-sys-color-on-surface);
+  display: block;
+  overflow-x: auto;
+}
+
+/* コードコピーボタン */
+.code-copy-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: var(--md-sys-color-surface-variant);
+  border: 1px solid var(--md-sys-color-outline);
+  color: var(--md-sys-color-on-surface-variant);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s, background-color 0.2s, color 0.2s;
+  z-index: 10;
+}
+
+.markdown-body pre:hover .code-copy-button {
+  opacity: 1;
+}
+
+.code-copy-button:hover {
+  background-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  border-color: var(--md-sys-color-primary);
+}
+
+.code-copy-button .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.code-copy-button.copied {
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+/* 引用 */
+.markdown-body blockquote {
+  padding: 8px 20px;
+  margin: 0 0 16px 0;
+  border-left: 4px solid var(--md-sys-color-primary);
+  background-color: rgba(208, 188, 255, 0.05);
+  border-radius: 0 8px 8px 0;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.markdown-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* リスト */
+.markdown-body ul, 
+.markdown-body ol {
+  padding-left: 24px;
+}
+
+.markdown-body li {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.markdown-body li > p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* テーブル */
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.markdown-body th, 
+.markdown-body td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  text-align: left;
+}
+
+.markdown-body th {
+  background-color: var(--md-sys-color-surface-variant);
+  color: var(--md-sys-color-on-surface-variant);
+  font-weight: 600;
+}
+
+.markdown-body tr:last-child td {
+  border-bottom: none;
+}
+
+.markdown-body tr:nth-child(even) {
+  background-color: rgba(230, 225, 229, 0.02);
+}
+
+/* 画像 */
+.markdown-body img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin: 16px 0;
+}
+
+/* 水平線 */
+.markdown-body hr {
+  height: 1px;
+  background-color: var(--md-sys-color-outline-variant);
+  border: none;
+  margin: 32px 0;
+}
+
+/* --- Plain Mode View (plain-body) --- */
+.plain-body {
+  display: none;
+  flex-direction: column;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 12px;
+  background-color: var(--md-sys-color-surface);
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.plain-body.active {
+  display: flex;
+}
+
+.plain-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background-color: rgba(147, 143, 153, 0.08);
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  font-size: 14px;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.text-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: var(--md-sys-color-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.text-button:hover {
+  background-color: rgba(208, 188, 255, 0.08);
+}
+
+.text-button .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.plain-code-container {
+  margin: 0;
+  padding: 24px;
+  overflow: auto;
+  max-height: calc(100vh - 250px);
+}
+
+.plain-code {
+  font-family: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--md-sys-color-on-surface);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* --- Snackbar (トースト通知) --- */
+.snackbar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translate(-50%, 80px);
+  background-color: var(--md-sys-color-inverse-surface);
+  color: var(--md-sys-color-inverse-on-surface);
+  padding: 14px 24px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), opacity 0.3s;
+  pointer-events: none;
+}
+
+.snackbar.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+/* スクロールバーのカスタマイズ（MD3調） */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--md-sys-color-outline-variant);
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--md-sys-color-outline);
+}
