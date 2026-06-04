@@ -142,6 +142,9 @@
     <!-- Top App Bar -->
     <header class="top-app-bar">
       <div class="top-app-bar-start">
+        <button id="btn-toggle-sidebar" class="icon-button" title="Toggle Sidebar">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
         <div class="breadcrumbs-container">
           ${breadcrumbs.map((b, idx) => {
             if (b.isLast) {
@@ -255,6 +258,7 @@
       viewPlain.classList.remove('active');
       
       document.querySelector('.toc-sidebar').style.display = '';
+      document.getElementById('btn-toggle-sidebar').style.display = '';
     } else {
       btnPlain.classList.add('active');
       btnPlain.setAttribute('aria-selected', 'true');
@@ -265,7 +269,38 @@
       viewPreview.classList.remove('active');
       
       document.querySelector('.toc-sidebar').style.display = 'none';
+      document.getElementById('btn-toggle-sidebar').style.display = 'none';
     }
+  }
+
+  // サイドバーの開閉制御
+  const btnToggleSidebar = document.getElementById('btn-toggle-sidebar');
+  const tocSidebar = document.querySelector('.toc-sidebar');
+  const contentPanel = document.querySelector('.content-panel');
+  const tocHeader = document.querySelector('.toc-header');
+
+  function toggleSidebar() {
+    tocSidebar.classList.toggle('collapsed-sidebar');
+    contentPanel.classList.toggle('full-width');
+    
+    const icon = btnToggleSidebar.querySelector('.material-symbols-outlined');
+    if (tocSidebar.classList.contains('collapsed-sidebar')) {
+      icon.textContent = 'menu_open';
+    } else {
+      icon.textContent = 'menu';
+    }
+    
+    // スライド完了後（300ms）にインジケーター位置を再計算
+    setTimeout(updateTocSpy, 350);
+  }
+
+  if (btnToggleSidebar) {
+    btnToggleSidebar.addEventListener('click', toggleSidebar);
+  }
+  if (tocHeader) {
+    tocHeader.style.cursor = 'pointer';
+    tocHeader.title = '目次を閉じる';
+    tocHeader.addEventListener('click', toggleSidebar);
   }
 
   btnPreview.addEventListener('click', () => switchMode('preview'));

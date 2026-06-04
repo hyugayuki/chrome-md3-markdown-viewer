@@ -92,6 +92,11 @@ html, body {
   margin-right: 24px;
 }
 
+#btn-toggle-sidebar {
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
 .top-app-bar-end {
   display: flex;
   align-items: center;
@@ -228,6 +233,11 @@ html, body {
   z-index: 90;
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.toc-sidebar.collapsed-sidebar {
+  transform: translateX(-100%);
 }
 
 .toc-header {
@@ -236,6 +246,27 @@ html, body {
   gap: 12px;
   padding: 24px 24px 16px 24px;
   border-bottom: 1px solid rgba(147, 143, 153, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+.toc-header:hover {
+  background-color: rgba(208, 188, 255, 0.05);
+}
+
+.toc-header::after {
+  content: 'chevron_left';
+  font-family: 'Material Symbols Outlined';
+  margin-left: auto;
+  font-size: 20px;
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  transform: translateX(5px);
+}
+
+.toc-header:hover::after {
+  opacity: 0.7;
+  transform: translateX(0);
 }
 
 .toc-header h3 {
@@ -391,6 +422,12 @@ html, body {
   min-width: 0;
   display: flex;
   flex-direction: column;
+  transition: margin-left 0.3s cubic-bezier(0.2, 0, 0, 1), padding 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.content-panel.full-width {
+  margin-left: 0;
+  padding: 40px 10%;
 }
 
 /* サイドバーが非表示（Plainモード時）の時 */
