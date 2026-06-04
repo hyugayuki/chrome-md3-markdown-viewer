@@ -159,6 +159,18 @@
         </div>
       </div>
       <div class="top-app-bar-end">
+        <!-- Theme Selector -->
+        <div class="theme-select-container">
+          <span class="material-symbols-outlined theme-select-icon">palette</span>
+          <select id="theme-select" class="theme-select" aria-label="Select Theme">
+            <option value="theme-default">Dark Purple</option>
+            <option value="theme-light-mint">Light Mint</option>
+            <option value="theme-cyber-ocean">Cyber Ocean</option>
+            <option value="theme-sweet-sakura">Sweet Sakura</option>
+            <option value="theme-warm-amber">Warm Amber</option>
+          </select>
+        </div>
+
         <!-- Segmented Buttons (Mode Toggle) -->
         <div class="segmented-button-container">
           <button id="btn-preview" class="segmented-button active" aria-selected="true">
@@ -448,6 +460,30 @@
   if (tocLinks.length > 0) {
     window.addEventListener('scroll', updateTocSpy);
     setTimeout(updateTocSpy, 100);
+  }
+
+  // テーマ切り替え機能
+  const themeSelect = document.getElementById('theme-select');
+  const themes = ['theme-default', 'theme-light-mint', 'theme-cyber-ocean', 'theme-sweet-sakura', 'theme-warm-amber'];
+
+  function applyTheme(themeName) {
+    document.body.classList.remove(...themes);
+    document.body.classList.add(themeName);
+  }
+
+  if (themeSelect) {
+    // 保存されたテーマを復元
+    const savedTheme = localStorage.getItem('md3-markdown-viewer-theme') || 'theme-default';
+    themeSelect.value = savedTheme;
+    applyTheme(savedTheme);
+
+    themeSelect.addEventListener('change', (e) => {
+      const selectedTheme = e.target.value;
+      applyTheme(selectedTheme);
+      localStorage.setItem('md3-markdown-viewer-theme', selectedTheme);
+      // 配色が変わると見出し等の高さが微小変化する場合があるため再計算
+      setTimeout(updateTocSpy, 50);
+    });
   }
 
   function escapeHtml(string) {
