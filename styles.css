@@ -758,3 +758,129 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--md-sys-color-outline);
 }
+
+/* --- テーマセレクター (Theme Select) --- */
+.theme-select-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: 8px;
+  padding: 0 10px 0 8px;
+  height: 40px;
+  background-color: transparent;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.theme-select-container:hover {
+  border-color: var(--md-sys-color-primary);
+  background-color: rgba(230, 225, 229, 0.04);
+}
+
+.theme-select-icon {
+  font-size: 20px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.theme-select {
+  background: transparent;
+  border: none;
+  color: var(--md-sys-color-on-surface);
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  padding-right: 4px;
+}
+
+.theme-select option {
+  background-color: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+}
+
+/* --- テーマ定義 --- */
+
+/* 1. Light Mint (緑ベースのライトテーマ) */
+body.theme-light-mint {
+  --md-sys-color-background: #f6faf4;
+  --md-sys-color-on-background: #191c19;
+  --md-sys-color-surface: #edf3eb;
+  --md-sys-color-on-surface: #191c19;
+  --md-sys-color-surface-variant: #dce5db;
+  --md-sys-color-on-surface-variant: #414942;
+  --md-sys-color-primary: #386a44;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #b9f3c2;
+  --md-sys-color-on-primary-container: #00210b;
+  --md-sys-color-secondary-container: #d7e8de;
+  --md-sys-color-on-secondary-container: #111f17;
+  --md-sys-color-outline: #717972;
+  --md-sys-color-outline-variant: #c0c9c1;
+  --md-sys-color-inverse-surface: #2e312f;
+  --md-sys-color-inverse-on-surface: #f0f1ee;
+  --header-bg: rgba(246, 250, 244, 0.85);
+}
+
+/* 2. Cyber Ocean (シアンベースのダークテーマ) */
+body.theme-cyber-ocean {
+  --md-sys-color-background: #0b111e;
+  --md-sys-color-on-background: #e2e8f0;
+  --md-sys-color-surface: #1e293b;
+  --md-sys-color-on-surface: #f1f5f9;
+  --md-sys-color-surface-variant: #334155;
+  --md-sys-color-on-surface-variant: #94a3b8;
+  --md-sys-color-primary: #06b6d4;
+  --md-sys-color-on-primary: #0f172a;
+  --md-sys-color-primary-container: #0891b2;
+  --md-sys-color-on-primary-container: #ecfeff;
+  --md-sys-color-secondary-container: #1e293b;
+  --md-sys-color-on-secondary-container: #22d3ee;
+  --md-sys-color-outline: #475569;
+  --md-sys-color-outline-variant: #334155;
+  --md-sys-color-inverse-surface: #e2e8f0;
+  --md-sys-color-inverse-on-surface: #0f172a;
+  --header-bg: rgba(11, 17, 30, 0.85);
+}
+
+/* 3. Sweet Sakura (ピンクベースのライトテーマ) */
+body.theme-sweet-sakura {
+  --md-sys-color-background: #fff8f9;
+  --md-sys-color-on-background: #201a1b;
+  --md-sys-color-surface: #fcecef;
+  --md-sys-color-on-surface: #201a1b;
+  --md-sys-color-surface-variant: #ffd9e2;
+  --md-sys-color-on-surface-variant: #534346;
+  --md-sys-color-primary: #bf0060;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #ffd9e2;
+  --md-sys-color-on-primary-container: #3f001c;
+  --md-sys-color-secondary-container: #ffd9e2;
+  --md-sys-color-on-secondary-container: #2b1518;
+  --md-sys-color-outline: #857376;
+  --md-sys-color-outline-variant: #d8c2c5;
+  --md-sys-color-inverse-surface: #362f30;
+  --md-sys-color-inverse-on-surface: #faeeef;
+  --header-bg: rgba(255, 248, 249, 0.85);
+}
+
+/* 4. Warm Amber (琥珀色ベースの暖色ダークテーマ) */
+body.theme-warm-amber {
+  --md-sys-color-background: #191207;
+  --md-sys-color-on-background: #efe0cf;
+  --md-sys-color-surface: #2c2112;
+  --md-sys-color-on-surface: #efe0cf;
+  --md-sys-color-surface-variant: #4f4539;
+  --md-sys-color-on-surface-variant: #d3c4b4;
+  --md-sys-color-primary: #ffb85d;
+  --md-sys-color-on-primary: #4b2800;
+  --md-sys-color-primary-container: #6b3b00;
+  --md-sys-color-on-primary-container: #ffddb9;
+  --md-sys-color-secondary-container: #4f4539;
+  --md-sys-color-on-secondary-container: #efe0cf;
+  --md-sys-color-outline: #9c8e80;
+  --md-sys-color-outline-variant: #4f4539;
+  --md-sys-color-inverse-surface: #efe0cf;
+  --md-sys-color-inverse-on-surface: #221a0f;
+  --header-bg: rgba(25, 18, 7, 0.85);
+}
