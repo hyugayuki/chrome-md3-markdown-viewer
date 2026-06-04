@@ -327,8 +327,12 @@
         activeLink = matchingLink;
 
         if (tocIndicator) {
+          const navEl = document.querySelector('.toc-navigation');
+          const navRect = navEl.getBoundingClientRect();
           const linkRect = matchingLink.getBoundingClientRect();
-          const offsetTop = matchingLink.offsetTop;
+          
+          // ビューポートに対する相対位置の差分から正確な offsetTop を算出
+          const offsetTop = linkRect.top - navRect.top;
           
           tocIndicator.style.height = `${linkRect.height}px`;
           tocIndicator.style.transform = `translateY(${offsetTop}px)`;
