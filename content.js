@@ -148,7 +148,12 @@
         <div class="breadcrumbs-container">
           ${breadcrumbs.map((b, idx) => {
             if (b.isLast) {
-              return `<span class="breadcrumb-item active" title="${b.name}">${b.name}</span>`;
+              return `
+                <span class="breadcrumb-item active" title="${b.name}">${b.name}</span>
+                <button id="btn-copy-filepath" class="breadcrumb-copy-button" title="Copy full filepath (without hash)">
+                  <span class="material-symbols-outlined">link</span>
+                </button>
+              `;
             } else {
               return `
                 <a href="${b.url}" class="breadcrumb-item-link" title="${b.name}">${b.name}</a>
@@ -313,6 +318,29 @@
     tocHeader.style.cursor = 'pointer';
     tocHeader.title = '目次を閉じる';
     tocHeader.addEventListener('click', toggleSidebar);
+  }
+
+  // ファイルパスのコピー
+  const btnCopyFilepath = document.getElementById('btn-copy-filepath');
+  if (btnCopyFilepath) {
+    btnCopyFilepath.addEventListener('click', () => {
+      const filepath = window.location.href.split('#')[0];
+      navigator.clipboard.writeText(filepath).then(() => {
+        const snackbarText = snackbar.querySelector('.snackbar-text');
+        const originalText = snackbarText ? snackbarText.textContent : 'Copied!';
+        if (snackbarText) snackbarText.textContent = 'Filepath copied!';
+        showSnackbar();
+        
+        const icon = btnCopyFilepath.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.textContent = 'check';
+          setTimeout(() => {
+            icon.textContent = 'link';
+            if (snackbarText) snackbarText.textContent = originalText;
+          }, 2000);
+        }
+      });
+    });
   }
 
   btnPreview.addEventListener('click', () => switchMode('preview'));

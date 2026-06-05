@@ -143,6 +143,31 @@ html, body {
   max-width: 250px;
 }
 
+.breadcrumb-copy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--md-sys-color-primary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  margin-left: 6px;
+  transition: background-color 0.2s, color 0.2s;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.breadcrumb-copy-button:hover {
+  background-color: rgba(208, 188, 255, 0.08);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+.breadcrumb-copy-button .material-symbols-outlined {
+  font-size: 16px;
+}
+
 /* セグメンテッドボタン (Mode Switcher) */
 .segmented-button-container {
   display: flex;
