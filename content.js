@@ -326,17 +326,13 @@
     btnCopyFilepath.addEventListener('click', () => {
       const filepath = window.location.href.split('#')[0];
       navigator.clipboard.writeText(filepath).then(() => {
-        const snackbarText = snackbar.querySelector('.snackbar-text');
-        const originalText = snackbarText ? snackbarText.textContent : 'Copied!';
-        if (snackbarText) snackbarText.textContent = 'Filepath copied!';
-        showSnackbar();
+        showSnackbar('Filepath copied!');
         
         const icon = btnCopyFilepath.querySelector('.material-symbols-outlined');
         if (icon) {
           icon.textContent = 'check';
           setTimeout(() => {
             icon.textContent = 'link';
-            if (snackbarText) snackbarText.textContent = originalText;
           }, 2000);
         }
       });
@@ -347,24 +343,28 @@
   btnPlain.addEventListener('click', () => switchMode('plain'));
 
   // コピー処理
-  function copyText(text) {
+  function copyText(text, message = 'Copied!') {
     navigator.clipboard.writeText(text).then(() => {
-      showSnackbar();
+      showSnackbar(message);
     }).catch(err => {
       console.error('Failed to copy text: ', err);
     });
   }
 
-  function showSnackbar() {
+  function showSnackbar(message) {
+    const snackbarText = snackbar.querySelector('.snackbar-text');
+    if (snackbarText && message) {
+      snackbarText.textContent = message;
+    }
     snackbar.classList.add('show');
     setTimeout(() => {
       snackbar.classList.remove('show');
     }, 2500);
   }
 
-  btnCopyRaw.addEventListener('click', () => copyText(rawMarkdown));
+  btnCopyRaw.addEventListener('click', () => copyText(rawMarkdown, 'Raw markdown copied!'));
   if (btnCopyPlain) {
-    btnCopyPlain.addEventListener('click', () => copyText(rawMarkdown));
+    btnCopyPlain.addEventListener('click', () => copyText(rawMarkdown, 'Raw markdown copied!'));
   }
 
   // コードブロック内のコピーボタン追加
